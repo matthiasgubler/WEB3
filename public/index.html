@@ -7,18 +7,44 @@
     <title>Praktikum WEB3 - geilisieche, Daniela Egli, Ivo Maag, Matthias Gubler</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="style/main.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#issuedate").datepicker({
+                dateFormat: 'dd.mm.yy'
+            });
+        });
+    </script>
 </head>
 <body>
 <div id="background">
     <header><h1>Issue Tracker</h1></header>
     <section id="content">
         <section id="projects">
+            <fieldset>
+                <legend>Projects</legend>
+                <div class="form-group">
+                    <label for="projectsList">Projects:</label>
+                    <select class="form-control" id="projectsList">
+                        <option>Learn RiotJS</option>
+                        <option>Project Planning</option>
+                        <option>Implement Project</option>
+                    </select>
+                </div>
 
-            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" placeholder="new project...">
-            <button>Create Project</button>
+                <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
+                       placeholder="new project...">
+                <button>Create Project</button>
+            </fieldset>
         </section>
         <section id="newissue">
             <select>
@@ -27,14 +53,39 @@
                 <option>2</option>
                 <option>3</option>
             </select>
+
+            <label for="issuedate">Datum: </label>
+            <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]"/>
             <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
             <button>Create Issue</button>
         </section>
-        <section id="issues"></section>
+        <section id="issues">
+            <fieldset>
+                <legend>Issues</legend>
+            </fieldset>
+            <section id="issueList">
+                <ul>
+                    <li>
+                        <input type="checkbox" class="issueDone" />
+                        <span>Read Documentation</span>
+                        <span>12.01.2018</span>
+                        <button class="deleteIssue"></button>
+                    </li>
+                </ul>
+            </section>
+        </section>
     </section>
     <footer>
         <a href="tests/SpecRunner.html">Jasmin Tests (Spec Runner)</a>
     </footer>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
