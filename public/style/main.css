@@ -1,0 +1,12 @@
+#background{
+    background: linear-gradient(#f5f5f5, #FFFFFF);
+}
+
+#content {
+    margin: auto;
+    width: 90%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 100px grey;
+    max-width: 800px;
+    min-width: 300px;
+}
