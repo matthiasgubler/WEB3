@@ -13,16 +13,28 @@
 </head>
 <body>
 <div id="background">
-<section id="content">
-</section>
+    <header><h1>Issue Tracker</h1></header>
+    <section id="content">
+        <section id="projects">
+
+            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" placeholder="new project...">
+            <button>Create Project</button>
+        </section>
+        <section id="newissue">
+            <select>
+                <option selected="true" disabled="true">Priority</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
+            <button>Create Issue</button>
+        </section>
+        <section id="issues"></section>
+    </section>
     <footer>
         <a href="tests/SpecRunner.html">Jasmin Tests (Spec Runner)</a>
     </footer>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
 </body>
 </html>
