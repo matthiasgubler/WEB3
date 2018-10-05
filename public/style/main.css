@@ -121,3 +121,9 @@ footer a{
 footer a:hover{
     color: #7f7f7f;
 }
+
+h1 {
+    background: linear-gradient(to right, deeppink, darkorange , green, cyan, blue, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
