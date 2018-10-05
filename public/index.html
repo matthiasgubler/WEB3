@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <!-- W3 Library and Icons-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" type="text/css" href="style/main.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -62,17 +66,37 @@
         <section id="issues">
             <fieldset>
                 <legend>Issues</legend>
+                <section id="issueList">
+                    <ul>
+                        <li class="issue">
+                            <label for="checkbox-1" class="checkboxlabel">
+                                <input type="checkbox" name="done" checked="checked" class="issueDone" id="checkbox-1">
+                                <span class="checkbox">
+                                </span>
+                            </label>
+                            <div class="issueContent">
+                                <span>Read Documentation</span>
+                                <span>12.01.2018</span>
+
+                            </div>
+                            <button class="deleteIssue fa fa-trash"></button>
+                        </li>
+
+                        <li class="issue done">
+                            <label for="checkbox-2" class="checkboxlabel">
+                                <input type="checkbox" name="done" checked="checked" class="issueDone" id="checkbox-2">
+                                <span class="checkbox">
+                                </span>
+                            </label>
+                            <div class="issueContent">
+                                <span>Read Documentation</span>
+                                <span>12.01.2018</span>
+                            </div>
+                            <button class="deleteIssue fa fa-trash"></button>
+                        </li>
+                    </ul>
+                </section>
             </fieldset>
-            <section id="issueList">
-                <ul>
-                    <li>
-                        <input type="checkbox" class="issueDone" />
-                        <span>Read Documentation</span>
-                        <span>12.01.2018</span>
-                        <button class="deleteIssue"></button>
-                    </li>
-                </ul>
-            </section>
         </section>
     </section>
     <footer>

@@ -10,6 +10,12 @@
     padding: 5px 20px 5px 20px;
 }
 
+input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
 footer{
     padding-top: 5px;
     bottom: 0px;
@@ -18,6 +24,94 @@ footer{
     background-color: #555555;
     position: absolute;
     text-align: center;
+}
+
+#issueList ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.issue {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.issueContent{
+    margin-bottom: 10px;
+    align-self: stretch;
+    flex-grow: 3;
+}
+
+input[type="checkbox"] {
+    display: none;
+    cursor: pointer;
+}
+
+.checkboxlabel {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px
+}
+
+.checkboxlabel:hover input ~ .checkbox {
+    background-color: #ccc;
+}
+
+.checkboxlabel input:checked ~ .checkbox {
+    background-color: #2196F3;
+}
+
+.checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkboxlabel input:checked ~ .checkbox:after {
+    display: block;
+}
+
+.checkboxlabel .checkbox:after {
+    left: 9px;
+    top: 6px;
+    width: 9px;
+    height: 15px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #eee;
+}
+
+.deleteIssue{
+    padding: 2px 5px 2px 5px;
+    font-size: 20px;
+}
+
+.todoItem.done input[name=title] {
+    background-color: #eeeeee;
+    text-decoration: line-through;
 }
 
 footer a{
