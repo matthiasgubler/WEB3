@@ -64,41 +64,7 @@
             <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
             <button>Create Issue</button>
         </section>
-        <section id="issues">
-            <fieldset>
-                <legend class="rainbow3">Issues</legend>
-                <section id="issueList">
-                    <ul>
-                        <li class="issue">
-                            <label for="checkbox-1" class="checkboxlabel">
-                                <input type="checkbox" name="done" checked="checked" class="issueDone" id="checkbox-1">
-                                <span class="checkbox">
-                                </span>
-                            </label>
-                            <div class="issueContent">
-                                <span>Read Documentation</span>
-                                <span>12.01.2018</span>
-
-                            </div>
-                            <button class="deleteIssue fa fa-trash"></button>
-                        </li>
-
-                        <li class="issue done">
-                            <label for="checkbox-2" class="checkboxlabel">
-                                <input type="checkbox" name="done" checked="checked" class="issueDone" id="checkbox-2">
-                                <span class="checkbox">
-                                </span>
-                            </label>
-                            <div class="issueContent">
-                                <span>Read Documentation</span>
-                                <span>12.01.2018</span>
-                            </div>
-                            <button class="deleteIssue fa fa-trash"></button>
-                        </li>
-                    </ul>
-                </section>
-            </fieldset>
-        </section>
+        <issuelist></issuelist>
     </section>
     <footer>
         <a href="tests/SpecRunner.html">Jasmin Tests (Spec Runner)</a>
@@ -111,6 +77,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+<!-- Riot Custom Tags-->
+<script type="riot/tag" src="js/custom/issuelist.tag.html"></script>
+<script type="riot/tag" src="js/custom/issue.tag.html"></script>
+<!-- Models-->
+<script src="js/models/Issue.js"></script>
+<script src="js/models/IssueCollection.js"></script>
+
+<script src="js/id_generator.js"></script>
+<script src="js/riot+compiler.min.js"></script>
+<script>riot.mount('*')</script>
 
 </body>
 </html>

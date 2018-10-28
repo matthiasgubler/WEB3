@@ -1,0 +1,18 @@
+<issuelist>
+    <section id="issues">
+        <fieldset>
+            <legend class="rainbow3">Issues</legend>
+            <section id="issueList">
+                <ul>
+                    <issue each="{ allIssues() }"></issue>
+                </ul>
+            </section>
+        </fieldset>
+    </section>
+    <script>
+        this.issues = new IssueCollection(this);
+        this.allIssues = function () {
+            return this.issues.get();
+        }
+    </script>
+</issuelist>

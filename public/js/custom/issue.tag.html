@@ -1,0 +1,18 @@
+<issue>
+    <li class="issue">
+        <label for="checkbox-{ identifier }" class="checkboxlabel">
+            <input type="checkbox" name="done" checked="{ checked }" class="{ checked ? 'issueDone' : '' }" id="checkbox-{ identifier }">
+            <span class="checkbox"></span>
+        </label>
+        <div class="issueContent">
+            <span>{ title }</span>
+            <span>{ date }</span>
+        </div>
+        <button class="deleteIssue fa fa-trash"></button>
+    </li>
+
+    <script>
+        var issue = this;
+
+    </script>
+</issue>
