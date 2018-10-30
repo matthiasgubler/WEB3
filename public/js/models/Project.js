@@ -1,16 +1,7 @@
 class Project {
     constructor(title) {
         this.identifier = create_UUID().substr(0,4);
-        console.log("asdfasfsdfasdf");
+        console.log("halloibims1neusproject");
         this.title = title;
     }
-/*
-    check() {
-        this.checked = true;
-    }
-
-    uncheck() {
-        this.checked = false;
-    }
- */
 }

@@ -1,7 +1,7 @@
 class Issue {
     constructor(title, date, checked) {
         this.identifier = create_UUID().substr(0,4);
-        console.log("asdfasfsdfasdf");
+        console.log("issueissueissueisselalalalalal");
         this.title = title;
         this.date = date;
         this.checked = checked;
