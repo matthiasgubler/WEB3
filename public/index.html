@@ -34,24 +34,7 @@
     <section id="content">
 
         <header><h1 class="rainbow1">Tissue Tracker</h1></header>
-        <projectlist>hallo project was lauft wiso gaht nöd?</projectlist>
-        <!--<section id="projects">
-            <fieldset>
-                <legend class="rainbow2">Projects</legend>
-                <div class="form-group">
-                    <label for="projectsList">Projects:</label>
-                    <select class="form-control" id="projectsList">
-                        <option>Learn RiotJS</option>
-                        <option>Project Planning</option>
-                        <option>Implement Project</option>
-                    </select>
-                </div>
-
-                <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
-                       placeholder="new project...">
-                <button>Create Project</button>
-            </fieldset>
-        </section>-->
+        <projectlist></projectlist>
         <section id="newissue">
             <select>
                 <option selected="true" disabled="true">Priority</option>
@@ -65,7 +48,7 @@
             <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
             <button>Create Issue</button>
         </section>
-        <issuelist>hallo i bims</issuelist>
+        <issuelist></issuelist>
 
     </section>
     <footer>
@@ -82,9 +65,13 @@
 <!-- Riot Custom Tags-->
 <script type="riot/tag" src="js/custom/issuelist.tag.html"></script>
 <script type="riot/tag" src="js/custom/issue.tag.html"></script>
+<script type="riot/tag" src="js/custom/projectlist.tag.html"></script>
+
 <!-- Models-->
 <script src="js/models/Issue.js"></script>
 <script src="js/models/IssueCollection.js"></script>
+<script src="js/models/Project.js"></script>
+<script src="js/models/ProjectCollection.js"></script>
 
 <script src="js/id_generator.js"></script>
 <script src="js/riot+compiler.min.js"></script>

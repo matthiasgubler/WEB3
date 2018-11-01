@@ -1,21 +1,24 @@
 <projectlist>
     <section id="projects">
-        <fieldset id="projects">
+        <fieldset>
             <legend class="rainbow2">Projects :-)</legend>
             <div class="form-group">
                 <label for="projectsList">Projects:</label>
                 <select class="form-control" id="projectsList">
-                    <project each="{ allProjects() }"></project>
+                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }</option>
+
                 </select>
             </div>
             <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
                    placeholder="new project...">
             <button>Create Project</button>
             <script>
-                this.projects = new ProjectCollection(this)
+                this.projects = new ProjectCollection(this);
+                this.projects.add(new Project("Testeeeoor"));
                 this.allProjects = function () {
-                    return this.projects.get()
+                    return this.projects.get();
                 }
+
             </script>
         </fieldset>
     </section>

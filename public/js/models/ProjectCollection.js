@@ -1,6 +1,6 @@
 class ProjectCollection {
     constructor(tag) {
-        this.collection = [new Project('Projekt neue Frisur'), new Issue('Projekt ibims')];
+        this.collection = [new Project('Projekt neue Frisur'), new Project('Projekt ibims')];
         if (tag) {
             this.riotjs_tag = tag;
         }
