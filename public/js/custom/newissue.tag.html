@@ -17,5 +17,10 @@
             console.log("yippieayyeaah schweinebacke");
             event.preventDefault();
         });
+        this.on('mount', function() {
+            $("#issuedate").datepicker({
+                dateFormat: 'dd.mm.yy'
+            });
+        });
     </script>
 </newissue>
