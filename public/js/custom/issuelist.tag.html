@@ -4,7 +4,7 @@
             <legend class="rainbow3">Issues</legend>
             <section id="issueList">
                 <ul>
-                    <issue each="{ allIssues() }"></issue>
+                    <issue each="{ allIssues() }" ></issue>
                 </ul>
             </section>
         </fieldset>
@@ -12,7 +12,7 @@
     <script>
         this.issues = new IssueCollection(this);
         this.allIssues = function () {
-            return this.issues.get();
+            return this.issues.getPrioritySorted();
         }
     </script>
 </issuelist>

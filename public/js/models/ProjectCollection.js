@@ -15,6 +15,6 @@ class ProjectCollection {
     }
 
     remove(model) {
-        this.collection.push(model);
+        this.collection.pop(model);
     }
 }

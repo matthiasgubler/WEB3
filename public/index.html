@@ -35,19 +35,7 @@
 
         <header><h1 class="rainbow1">Tissue Tracker</h1></header>
         <projectlist></projectlist>
-        <section id="newissue">
-            <select>
-                <option selected="true" disabled="true">Priority</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-
-            <label for="issuedate">Datum: </label>
-            <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]"/>
-            <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
-            <button>Create Issue</button>
-        </section>
+        <newissue></newissue>
         <issuelist></issuelist>
 
     </section>
@@ -65,6 +53,7 @@
 <!-- Riot Custom Tags-->
 <script type="riot/tag" src="js/custom/issuelist.tag.html"></script>
 <script type="riot/tag" src="js/custom/issue.tag.html"></script>
+<script type="riot/tag" src="js/custom/newissue.tag.html"></script>
 <script type="riot/tag" src="js/custom/projectlist.tag.html"></script>
 
 <!-- Models-->
@@ -73,9 +62,14 @@
 <script src="js/models/Project.js"></script>
 <script src="js/models/ProjectCollection.js"></script>
 
+<script src="js/app.js"></script>
 <script src="js/id_generator.js"></script>
 <script src="js/riot+compiler.min.js"></script>
-<script>riot.mount('*')</script>
+<script>
+    var bus = riot.observable();
+    riot.mount('*');
+    riot.mixin({bus: bus});
+</script>
 
 </body>
 </html>
