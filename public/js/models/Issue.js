@@ -4,7 +4,7 @@ class Issue {
         this.title = title;
         this.date = date;
         this.checked = checked;
-        this.priority = priority;
+        this.priority = isNaN(parseInt(priority)) ? 3 : parseInt(priority);
     }
 
     check() {

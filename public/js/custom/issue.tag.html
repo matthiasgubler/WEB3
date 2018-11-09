@@ -9,10 +9,15 @@
             <span>{ title }</span>
             <span>{ date }</span>
         </div>
-        <button class="deleteIssue fa fa-trash"></button>
+        <button class="deleteIssue fa fa-trash" onclick="{ removeIssue }"></button>
     </li>
 
     <script>
-        var issue = this;
+        var tag = this;
+
+        removeIssue(e){
+            this.bus.trigger('issueRemoved', tag.identifier);
+            e.preventDefault()
+        }
     </script>
 </issue>

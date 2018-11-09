@@ -1,6 +1,6 @@
 <newissue>
     <section id="newissue">
-        <select>
+        <select ref="priority">
             <option selected="true" disabled="true">Priority</option>
             <option>1</option>
             <option>2</option>
@@ -8,14 +8,15 @@
         </select>
 
         <label for="issuedate">Datum: </label>
-        <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]"/>
-        <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue...">
-        <button id="newIssueButton">Create Issue</button>
+        <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]" ref="date"/>
+        <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue..."
+               ref="title">
+        <button id="newIssueButton" onclick="{ addIssue }">Create Issue</button>
     </section>
     <script>
-        $("#newIssueButton").click(function(event) {
-            console.log("yippieayyeaah schweinebacke");
-            event.preventDefault();
-        });
+        addIssue(e){
+            this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value));
+            e.preventDefault()
+        }
     </script>
 </newissue>
