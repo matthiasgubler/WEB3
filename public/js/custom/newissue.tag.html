@@ -14,6 +14,11 @@
         <button id="newIssueButton" onclick="{ addIssue }">Create Issue</button>
     </section>
     <script>
+        this.on('mount', function() {
+            $("#issuedate").datepicker({
+                dateFormat: 'dd.mm.yy'
+            });
+        });
         addIssue(e){
             this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value));
             e.preventDefault()
