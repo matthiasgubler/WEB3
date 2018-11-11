@@ -10,7 +10,7 @@
             </div>
             <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
                    placeholder="new project...">
-            <button>Create Project</button>
+            <button id="newProjectButton" onclick="{ addProject }">Create Project</button>
             <script>
                 var tag = this;
                 tag.projects = new ProjectCollection(this);
@@ -22,7 +22,16 @@
                 projectChange(e){
                     tag.bus.trigger('projectChange', this.refs.project.value);
                     e.preventDefault();
-                }
+                };
+                addProject(e){
+                    this.bus.trigger('projectAdded', new Project(this.refs.title.value));
+                    e.preventDefault();
+                };
+                this.bus.on('projectAdded', function(project){
+                    console.log(project);
+                    tag.projects.add(project);
+                    tag.update();
+                });
 
             </script>
         </fieldset>
