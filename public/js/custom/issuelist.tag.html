@@ -26,5 +26,10 @@
             tag.issues.remove(identifier);
             tag.update();
         });
+
+        this.bus.on('projectChange', function(project){
+            tag.issues = project.issueCollection;
+            tag.update();
+        });
     </script>
 </issuelist>

@@ -4,8 +4,9 @@
             <legend class="rainbow2">Projects :-)</legend>
             <div class="form-group">
                 <label for="projectsList">Projects:</label>
-                <select class="form-control" id="projectsList" ref="project">
-                    <option each="{ project in allProjects() }" value="{ project.identifier }" onchange="{ projectChange }">{ project.title }</option>
+                <select class="form-control" id="projectsList" ref="project" onchange="{ projectChange }">
+                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }
+                    </option>
                 </select>
             </div>
             <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
@@ -14,13 +15,15 @@
             <script>
                 var tag = this;
                 tag.projects = new ProjectCollection(this);
-                tag.projects.add(new Project("Testeeeoor"));
                 tag.allProjects = function () {
                     return tag.projects.get();
                 }
 
-                projectChange(e){
-                    tag.bus.trigger('projectChange', this.refs.project.value);
+                projectChange(e)
+                {
+                    let project = tag.projects.getByIdentifier(this.refs.project.value);
+                    console.log(project);
+                    tag.bus.trigger('projectChange', project);
                     e.preventDefault();
                 }
 
