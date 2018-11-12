@@ -16,18 +16,17 @@
             return this.issues.getPrioritySorted();
         }
 
-        this.bus.on('issueAdded', function(issue){
-            console.log(issue);
+        this.bus.on('issueAdded', function (issue) {
             tag.issues.add(issue);
             tag.update();
         });
 
-        this.bus.on('issueRemoved', function(identifier){
+        this.bus.on('issueRemoved', function (identifier) {
             tag.issues.remove(identifier);
             tag.update();
         });
 
-        this.bus.on('projectChange', function(project){
+        this.bus.on('projectChange', function (project) {
             tag.issues = project.issueCollection;
             tag.update();
         });

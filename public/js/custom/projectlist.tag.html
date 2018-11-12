@@ -9,9 +9,9 @@
                     </option>
                 </select>
             </div>
-            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
+            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" ref="newproject"
                    placeholder="new project...">
-            <button>Create Project</button>
+            <button onclick="{ addProject }">Create Project</button>
             <script>
                 var tag = this;
                 tag.projects = new ProjectCollection(this);
@@ -22,9 +22,19 @@
                 projectChange(e)
                 {
                     let project = tag.projects.getByIdentifier(this.refs.project.value);
-                    console.log(project);
                     tag.bus.trigger('projectChange', project);
                     e.preventDefault();
+                }
+
+                addProject(e)
+                {
+                    let newProject = new Project(this.refs.newproject.value);
+                    tag.projects.add(newProject);
+                    tag.update()
+                    this.refs.project.value = newProject.identifier;
+                    this.refs.newproject.value = "";
+                    tag.bus.trigger('projectChange', newProject);
+                    e.preventDefault()
                 }
 
             </script>
