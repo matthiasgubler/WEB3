@@ -1,22 +1,29 @@
 <issue>
-    <li class="issue">
-        <label for="checkbox-{ identifier }" class="checkboxlabel">
-            <input type="checkbox" name="done" checked="{ checked }" class="{ checked ? 'issueDone' : '' }"
-                   id="checkbox-{ identifier }">
+    <li class="{ issue.checked ? 'issue done' : 'issue' }">
+        <label for="checkbox-{ issue.client_id }" class="checkboxlabel">
+            <input type="checkbox" name="done" checked="{ issue.checked }"
+                   id="checkbox-{ issue.client_id }" onchange="{ checkboxChange }" ref="checkbox">
             <span class="checkbox"></span>
         </label>
         <div class="issueContent">
-            <span>{ title }</span>
-            <span>{ date }</span>
+            <span>{ issue.title }</span>
+            <span>{ issue.date }</span>
         </div>
-        <button class="deleteIssue fa fa-trash" onclick="{ removeIssue }"></button>
+        <button class="deleteIssue" onclick="{ removeIssue }">X</button>
     </li>
 
     <script>
         var tag = this;
 
-        removeIssue(e){
-            this.bus.trigger('issueRemoved', tag.identifier);
+        checkboxChange(e)
+        {
+            this.bus.trigger('toggleCheckbox', tag.issue.client_id, this.refs.checkbox.checked);
+            e.preventDefault()
+        }
+
+        removeIssue(e)
+        {
+            this.bus.trigger('issueRemoved', tag.issue.client_id);
             e.preventDefault()
         }
     </script>

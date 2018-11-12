@@ -19,23 +19,37 @@
                     return tag.projects.get();
                 }
 
+                this.on("mount", function () {
+                    this.projectChange();
+                });
+
                 projectChange(e)
                 {
-                    let project = tag.projects.getByIdentifier(this.refs.project.value);
-                    tag.bus.trigger('projectChange', project);
-                    e.preventDefault();
+                    tag.project = tag.projects.getByIdentifier(this.refs.project.value);
+                    tag.bus.trigger('projectChange', tag.project);
+                    if(e){
+                        e.preventDefault();
+                    }
                 }
 
                 addProject(e)
                 {
                     let newProject = new Project(this.refs.newproject.value);
                     tag.projects.add(newProject);
-                    tag.update()
+                    tag.update();
                     this.refs.project.value = newProject.identifier;
                     this.refs.newproject.value = "";
+                    tag.project = newProject;
                     tag.bus.trigger('projectChange', newProject);
                     e.preventDefault()
                 }
+
+                this.bus.on('updatedIssues', function (issues) {
+                    console.log(tag.project);
+                    console.log(tag.project.issueCollection);
+                    console.log(issues);
+                    tag.project.issueCollection = issues;
+                });
 
             </script>
         </fieldset>
