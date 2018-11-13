@@ -21,6 +21,9 @@
         });
         addIssue(e){
             this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value));
+            this.refs.title.value = '';
+            this.refs.date.value = '';
+            this.refs.priority.value = 'Priority';
             e.preventDefault()
         }
     </script>

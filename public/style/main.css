@@ -149,8 +149,3 @@ footer a:hover{
 body {
     background-image: url("../img/unicorn.jpg");
 }
-
-.fa-trash:before {
-    content: "X
-    ";
-}

@@ -4,33 +4,51 @@
             <legend class="rainbow2">Projects :-)</legend>
             <div class="form-group">
                 <label for="projectsList">Projects:</label>
-                <select class="form-control" id="projectsList" ref="project">
-                    <option each="{ project in allProjects() }" value="{ project.identifier }" onchange="{ projectChange }">{ project.title }</option>
+                <select class="form-control" id="projectsList" ref="project" onchange="{ projectChange }">
+                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }
+                    </option>
                 </select>
             </div>
-            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject"
+            <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" ref="newproject"
                    placeholder="new project...">
-            <button id="newProjectButton" onclick="{ addProject }">Create Project</button>
+            <button onclick="{ addProject }">Create Project</button>
             <script>
                 var tag = this;
                 tag.projects = new ProjectCollection(this);
-                tag.projects.add(new Project("Testeeeoor"));
                 tag.allProjects = function () {
                     return tag.projects.get();
                 }
 
-                projectChange(e){
-                    tag.bus.trigger('projectChange', this.refs.project.value);
-                    e.preventDefault();
-                };
-                addProject(e){
-                    this.bus.trigger('projectAdded', new Project(this.refs.title.value));
-                    e.preventDefault();
-                };
-                this.bus.on('projectAdded', function(project){
-                    console.log(project);
-                    tag.projects.add(project);
+                this.on("mount", function () {
+                    this.projectChange();
+                });
+
+                projectChange(e)
+                {
+                    tag.project = tag.projects.getByIdentifier(this.refs.project.value);
+                    tag.bus.trigger('projectChange', tag.project);
+                    if(e){
+                        e.preventDefault();
+                    }
+                }
+
+                addProject(e)
+                {
+                    let newProject = new Project(this.refs.newproject.value);
+                    tag.projects.add(newProject);
                     tag.update();
+                    this.refs.project.value = newProject.identifier;
+                    this.refs.newproject.value = "";
+                    tag.project = newProject;
+                    tag.bus.trigger('projectChange', newProject);
+                    e.preventDefault()
+                }
+
+                this.bus.on('updatedIssues', function (issues) {
+                    console.log(tag.project);
+                    console.log(tag.project.issueCollection);
+                    console.log(issues);
+                    tag.project.issueCollection = issues;
                 });
 
             </script>

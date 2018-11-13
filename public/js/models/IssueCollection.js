@@ -1,6 +1,6 @@
 class IssueCollection {
     constructor(tag) {
-        this.collection = [new Issue('My Issue', '12.01.1993', true, 3), new Issue('Freddy Issue', '33.01.1993', false, 1)];
+        this.collection = [];
         if (tag) {
             this.riotjs_tag = tag;
         }
@@ -20,18 +20,25 @@ class IssueCollection {
         this.collection.push(model);
     }
 
-    indexOfIdentifier(identifier) {
+    indexOfIdentifier(client_id) {
         for (var i = 0; i < this.collection.length; i++) {
-            if (this.collection[i].identifier == identifier) {
+            if (this.collection[i].client_id == client_id) {
                 return i;
             }
         }
         return -1;
-        this.collection.pop(model);
     }
 
-    remove(identifier) {
-        var index = this.indexOfIdentifier(identifier);
+    getByIdentifier(identifier) {
+        let index = this.indexOfIdentifier(identifier);
+        if (index < 0) {
+            return null;
+        }
+        return this.collection[index];
+    }
+
+    remove(client_id) {
+        var index = this.indexOfIdentifier(client_id);
         if (index != -1) {
             this.collection.splice(index, 1);
         }

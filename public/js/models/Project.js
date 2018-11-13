@@ -1,6 +1,6 @@
 class Project {
     constructor(title) {
-        this.identifier = create_UUID().substr(0,4);
+        this.identifier = create_UUID();
         this.title = title;
         this.issueCollection = new IssueCollection();
     }

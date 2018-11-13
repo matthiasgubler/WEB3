@@ -1,6 +1,6 @@
 class Issue {
     constructor(title, date, checked, priority) {
-        this.identifier = create_UUID().substr(0,4);
+        this.client_id = create_UUID();
         this.title = title;
         this.date = date;
         this.checked = checked;
