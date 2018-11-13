@@ -1,6 +1,7 @@
 class IssueCollection {
     constructor(tag) {
         this.collection = [];
+        this.selected = this.collection[0];
         if (tag) {
             this.riotjs_tag = tag;
         }
@@ -16,8 +17,37 @@ class IssueCollection {
         return this.collection;
     }
 
+    save(){
+        localStorage.setItem("projects", JSON.stringify(this.collection));
+    }
+
+    load() {
+        if(!(localStorage.getItem("projects") === null)) {
+            this.collection = JSON.parse(localStorage.getItem("projects"));
+        }
+        this.selected = this.collection[0];
+    }
+
     add(model) {
         this.collection.push(model);
+        this.save();
+    }
+
+    clear(model){
+        var index;
+        for (var i = 0; i < this.collection.length; i++){
+            if (this.collection[i].description == name){
+                index = i;
+            }
+        }
+        this.collection.splice(index, 1);
+        if (this.collection.length > 0) {
+            this.selected = this.collection[0];
+        }
+        else {
+            this.selected = { description: "Leeres Projekt", issues: []}
+        }
+        this.save();
     }
 
     indexOfIdentifier(client_id) {
@@ -42,5 +72,6 @@ class IssueCollection {
         if (index != -1) {
             this.collection.splice(index, 1);
         }
+        this.save();
     }
 }
