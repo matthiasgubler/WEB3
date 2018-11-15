@@ -14,6 +14,7 @@ class IssueCollection {
     }
 
     get() {
+        load()
         return this.collection;
     }
 
@@ -22,9 +23,14 @@ class IssueCollection {
     }
 
     load() {
-        if(!(localStorage.getItem("projects") === null)) {
-            this.collection = JSON.parse(localStorage.getItem("projects"));
+        if(!(localStorage.getItem("projects") == null)) {
+            var issueData = JSON.parse(localStorage.getItem("projects"));
+            for (var i = 0; i < issueData.length; i++) {
+                let currIssueData = issueData[i];
+                this.collection.push(Issue(currIssueData.title, currIssueData.date, currIssueData.checked, currIssueData.priority))
+            }
         }
+
         this.selected = this.collection[0];
     }
 
