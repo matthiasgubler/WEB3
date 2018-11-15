@@ -5,8 +5,8 @@
             <div class="form-group">
                 <label for="projectsList">Projects:</label>
                 <select class="form-control" id="projectsList" ref="project" onchange="{ projectChange }">
-                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }
-                    </option>
+                    <option value="-1">Select Project...</option>
+                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }</option>
                 </select>
             </div>
             <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" ref="newproject"
@@ -21,10 +21,9 @@
 
                 this.on("mount", function () {
                     tag.projects.loadProjectCollection();
-                    console.log(tag.projects);
                     let selectedProject = tag.projects.loadSelectedProject();
                     if (selectedProject != null) {
-                        this.refs.project.value = selectedProject.identifier;
+                        tag.refs.project.value = selectedProject.identifier;
                     }
 
                     this.projectChange();
@@ -36,8 +35,6 @@
                     let selectedProject = tag.projects.getByIdentifier(this.refs.project.value);
                     tag.projects.setSelectedProject(selectedProject);
                     tag.bus.trigger('projectChange', selectedProject);
-
-
                     if (e) {
                         e.preventDefault();
                     }
@@ -49,8 +46,8 @@
                     let newProject = new Project(this.refs.newproject.value);
                     tag.projects.add(newProject);
                     tag.update();
-                    this.refs.project.value = newProject.identifier;
-                    this.refs.newproject.value = "";
+                    tag.refs.project.value = newProject.identifier;
+                    tag.refs.newproject.value = "";
                     tag.projects.selected = newProject;
 
                     tag.projects.setSelectedProject(newProject);

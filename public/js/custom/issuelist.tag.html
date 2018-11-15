@@ -1,4 +1,4 @@
-<issuelist if="{ display }">
+<issuelist show="{ display }">
     <section id="issues">
         <fieldset>
             <legend class="rainbow3">Issues</legend>
@@ -12,9 +12,9 @@
     <script>
         var tag = this;
         tag.display = false;
-        tag.issues = new IssueCollection(this);
+        tag.issues = new IssueCollection();
         tag.allIssues = function () {
-            return this.issues.getPrioritySorted();
+            return tag.issues.getPrioritySorted();
         }
 
         this.bus.on('issueAdded', function (issue) {
@@ -30,11 +30,9 @@
         });
 
         this.bus.on('projectChange', function (project) {
-            console.log(project);
             tag.display = project != null;
             if (tag.display) {
-                tag.issues = project.issueCollection;
-                console.log(tag);
+                tag.issues = new IssueCollection(project.issueCollection);
             }
             tag.update();
         })

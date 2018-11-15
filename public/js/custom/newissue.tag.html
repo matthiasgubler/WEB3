@@ -1,4 +1,4 @@
-<newissue if="{ display }">
+<newissue show="{ display }">
     <section id="newissue">
         <select ref="priority">
             <option selected="true" disabled="true">Priority</option>
@@ -32,6 +32,7 @@
 
         this.bus.on('projectChange', function (project) {
             tag.display = project != null;
+            tag.update();
         });
 
     </script>

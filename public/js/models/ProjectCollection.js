@@ -40,8 +40,6 @@ class ProjectCollection {
 
     storeProjectCollection() {
         localStorage.setItem("projectCollection", JSON.stringify(this.collection));
-        console.log("Store ProjectCollection");
-        console.log(localStorage);
     }
 
     storeSelectedProject() {
@@ -50,18 +48,19 @@ class ProjectCollection {
 
     loadProjectCollection() {
         let lsProjectCollection = localStorage.getItem("projectCollection");
-        if (!(lsProjectCollection == null)) {
+        if (lsProjectCollection != null) {
             this.collection = JSON.parse(lsProjectCollection);
         }
     }
 
     loadSelectedProject() {
         let lsProject = localStorage.getItem("selectedProject");
-        if (!(lsProject == null)) {
-            this.selected = JSON.parse(localStorage.getItem("lsProject"));
+        if (lsProject != null) {
+            this.selected = JSON.parse(lsProject);
         } else {
             this.selected = null;
         }
+
         return this.selected;
     }
 

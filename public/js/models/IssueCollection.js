@@ -1,9 +1,10 @@
 class IssueCollection {
-    constructor(tag) {
-        this.collection = [];
-        this.selected = this.collection[0];
-        if (tag) {
-            this.riotjs_tag = tag;
+
+    constructor(issueCollection) {
+        if (issueCollection) {
+            this.collection = issueCollection.collection;
+        } else {
+            this.collection = [];
         }
     }
 
@@ -14,7 +15,6 @@ class IssueCollection {
     }
 
     get() {
-        load()
         return this.collection;
     }
 
