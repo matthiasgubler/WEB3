@@ -21,21 +21,19 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+
 </head>
 <body>
 <div id="background">
     <section id="content">
-
-        <header><h1 class="rainbow1">Tissue Tracker</h1></header>
+        <header><h1 class="rainbow1">Tissue Tracker<button onclick="localStorage.clear();">Clear Storage</button></h1></header>
         <projectlist></projectlist>
         <newissue></newissue>
         <issuelist></issuelist>
-
     </section>
-    <footer>
+    <!-- footer>
         <a href="tests/SpecRunner.html">Jasmin Tests (Spec Runner)</a>
-    </footer>
+    </footer -->
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

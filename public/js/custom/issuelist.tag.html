@@ -1,4 +1,4 @@
-<issuelist>
+<issuelist if="{ display }">
     <section id="issues">
         <fieldset>
             <legend class="rainbow3">Issues</legend>
@@ -11,6 +11,7 @@
     </section>
     <script>
         var tag = this;
+        tag.display = false;
         tag.issues = new IssueCollection(this);
         tag.allIssues = function () {
             return this.issues.getPrioritySorted();
@@ -29,9 +30,15 @@
         });
 
         this.bus.on('projectChange', function (project) {
-            tag.issues = project.issueCollection;
+            console.log(project);
+            tag.display = project != null;
+            if (tag.display) {
+                tag.issues = project.issueCollection;
+                console.log(tag);
+            }
             tag.update();
-        });
+        })
+        ;
 
         this.bus.on('toggleCheckbox', function (client_id, checked) {
             tag.issues.getByIdentifier(client_id).checked = checked;

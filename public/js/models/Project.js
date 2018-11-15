@@ -7,7 +7,6 @@ class Project {
 
     add(issue) {
         this.issueCollection.push(issue);
-        this.issueCollection.save()
     }
 
     remove(issue) {

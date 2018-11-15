@@ -20,16 +20,28 @@
                 }
 
                 this.on("mount", function () {
+                    tag.projects.loadProjectCollection();
+                    console.log(tag.projects);
+                    let selectedProject = tag.projects.loadSelectedProject();
+                    if (selectedProject != null) {
+                        this.refs.project.value = selectedProject.identifier;
+                    }
+
                     this.projectChange();
+                    tag.update();
                 });
 
                 projectChange(e)
                 {
-                    tag.project = tag.projects.getByIdentifier(this.refs.project.value);
-                    tag.bus.trigger('projectChange', tag.project);
-                    if(e){
+                    let selectedProject = tag.projects.getByIdentifier(this.refs.project.value);
+                    tag.projects.setSelectedProject(selectedProject);
+                    tag.bus.trigger('projectChange', selectedProject);
+
+
+                    if (e) {
                         e.preventDefault();
                     }
+
                 }
 
                 addProject(e)
@@ -39,16 +51,20 @@
                     tag.update();
                     this.refs.project.value = newProject.identifier;
                     this.refs.newproject.value = "";
-                    tag.project = newProject;
+                    tag.projects.selected = newProject;
+
+                    tag.projects.setSelectedProject(newProject);
                     tag.bus.trigger('projectChange', newProject);
-                    e.preventDefault()
+
+                    tag.projects.storeProjectCollection();
+                    if (e) {
+                        e.preventDefault()
+                    }
                 }
 
                 this.bus.on('updatedIssues', function (issues) {
-                    console.log(tag.project);
-                    console.log(tag.project.issueCollection);
-                    console.log(issues);
-                    tag.project.issueCollection = issues;
+                    tag.projects.selected.issueCollection = issues;
+                    tag.projects.storeProjectCollection();
                 });
 
             </script>

@@ -1,4 +1,4 @@
-<newissue>
+<newissue if="{ display }">
     <section id="newissue">
         <select ref="priority">
             <option selected="true" disabled="true">Priority</option>
@@ -14,6 +14,9 @@
         <button id="newIssueButton" onclick="{ addIssue }">Create Issue</button>
     </section>
     <script>
+        var tag = this;
+        tag.display = false;
+
         this.on('mount', function() {
             $("#issuedate").datepicker({
                 dateFormat: 'dd.mm.yy'
@@ -26,5 +29,10 @@
             this.refs.priority.value = 'Priority';
             e.preventDefault()
         }
+
+        this.bus.on('projectChange', function (project) {
+            tag.display = project != null;
+        });
+
     </script>
 </newissue>
