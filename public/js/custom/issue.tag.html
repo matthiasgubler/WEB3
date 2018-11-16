@@ -1,7 +1,7 @@
 <issue>
-    <li class="{ issue.checked ? 'issue done' : 'issue' }">
+    <li class="{ issue.done ? 'issue done' : 'issue' }">
         <label for="checkbox-{ issue.client_id }" class="checkboxlabel">
-            <input type="checkbox" name="done" checked="{ issue.checked }"
+            <input type="checkbox" name="done" checked="{ issue.done }"
                    id="checkbox-{ issue.client_id }" onchange="{ checkboxChange }" ref="checkbox">
             <span class="checkbox"></span>
         </label>

@@ -6,7 +6,8 @@
                 <label for="projectsList">Projects:</label>
                 <select class="form-control" id="projectsList" ref="project" onchange="{ projectChange }">
                     <option value="-1">Select Project...</option>
-                    <option each="{ project in allProjects() }" value="{ project.identifier }">{ project.title }</option>
+                    <option each="{ project in allProjects() }" value="{ project.client_id }">{ project.title }
+                    </option>
                 </select>
             </div>
             <input id="inputnewproject" type="text" class="form-control" name="inputnewproject" ref="newproject"
@@ -23,9 +24,8 @@
                     tag.projects.loadProjectCollection();
                     let selectedProject = tag.projects.loadSelectedProject();
                     if (selectedProject != null) {
-                        tag.refs.project.value = selectedProject.identifier;
+                        tag.refs.project.value = selectedProject.client_id;
                     }
-
                     this.projectChange();
                     tag.update();
                 });
@@ -38,7 +38,6 @@
                     if (e) {
                         e.preventDefault();
                     }
-
                 }
 
                 addProject(e)
@@ -46,7 +45,8 @@
                     let newProject = new Project(this.refs.newproject.value);
                     tag.projects.add(newProject);
                     tag.update();
-                    tag.refs.project.value = newProject.identifier;
+
+                    tag.refs.project.value = newProject.client_id;
                     tag.refs.newproject.value = "";
                     tag.projects.selected = newProject;
 

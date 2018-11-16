@@ -31,8 +31,8 @@ class IssueCollection {
         return -1;
     }
 
-    getByIdentifier(identifier) {
-        let index = this.indexOfIdentifier(identifier);
+    getByIdentifier(client_id) {
+        let index = this.indexOfIdentifier(client_id);
         if (index < 0) {
             return null;
         }

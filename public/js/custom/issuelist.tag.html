@@ -38,8 +38,8 @@
         })
         ;
 
-        this.bus.on('toggleCheckbox', function (client_id, checked) {
-            tag.issues.getByIdentifier(client_id).checked = checked;
+        this.bus.on('toggleCheckbox', function (client_id, done) {
+            tag.issues.getByIdentifier(client_id).done = done;
             tag.bus.trigger('updatedIssues', tag.issues);
             tag.update();
         });

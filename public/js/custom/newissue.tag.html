@@ -16,14 +16,16 @@
     <script>
         var tag = this;
         tag.display = false;
+        tag.current_project_id = null;
 
-        this.on('mount', function() {
+        this.on('mount', function () {
             $("#issuedate").datepicker({
                 dateFormat: 'dd.mm.yy'
             });
         });
-        addIssue(e){
-            this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value));
+        addIssue(e)
+        {
+            this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value, tag.current_project_id));
             this.refs.title.value = '';
             this.refs.date.value = '';
             this.refs.priority.value = 'Priority';
@@ -32,8 +34,10 @@
 
         this.bus.on('projectChange', function (project) {
             tag.display = project != null;
+            if (tag.display) {
+                tag.current_project_id = project.client_id;
+            }
             tag.update();
         });
-
     </script>
 </newissue>

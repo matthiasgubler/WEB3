@@ -8,17 +8,17 @@ class ProjectCollection {
         }
     }
 
-    indexOfIdentifier(identifier) {
+    indexOfIdentifier(client_id) {
         for (var i = 0; i < this.collection.length; i++) {
-            if (this.collection[i].identifier == identifier) {
+            if (this.collection[i].client_id == client_id) {
                 return i;
             }
         }
         return -1;
     }
 
-    getByIdentifier(identifier) {
-        let index = this.indexOfIdentifier(identifier);
+    getByIdentifier(client_id) {
+        let index = this.indexOfIdentifier(client_id);
         if (index < 0) {
             return null;
         }

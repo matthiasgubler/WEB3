@@ -1,17 +1,19 @@
 class Issue {
-    constructor(title, date, checked, priority) {
+    constructor(title, date, done, priority, project_id) {
+        this.id = 0;
         this.client_id = create_UUID();
+        this.project_id = project_id;
         this.title = title;
         this.date = date;
-        this.checked = checked;
+        this.done = done;
         this.priority = isNaN(parseInt(priority)) ? 3 : parseInt(priority);
     }
 
     check() {
-        this.checked = true;
+        this.done = true;
     }
 
     uncheck() {
-        this.checked = false;
+        this.done = false;
     }
 }
