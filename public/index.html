@@ -26,7 +26,11 @@
 <body>
 <div id="background">
     <section id="content">
-        <header><h1 class="rainbow1">Tissue Tracker<button onclick="localStorage.clear();">Clear Storage</button></h1></header>
+        <header>
+            <h1 class="rainbow1">Tissue Tracker
+                <button onclick="localStorage.clear();">Clear Storage</button>
+            </h1>
+        </header>
         <projectlist></projectlist>
         <newissue></newissue>
         <issuelist></issuelist>
@@ -42,21 +46,35 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-<!-- Riot Custom Tags-->
+<!-- Riot Custom Tags -->
 <script type="riot/tag" src="js/custom/issuelist.tag.html"></script>
 <script type="riot/tag" src="js/custom/issue.tag.html"></script>
 <script type="riot/tag" src="js/custom/newissue.tag.html"></script>
 <script type="riot/tag" src="js/custom/projectlist.tag.html"></script>
 
-<!-- Models-->
+<!-- Models -->
 <script src="js/models/Issue.js"></script>
 <script src="js/models/IssueCollection.js"></script>
 <script src="js/models/Project.js"></script>
 <script src="js/models/ProjectCollection.js"></script>
 
+<!-- Reducers -->
+<script src="js/reducers/ProjectsReducer.js"></script>
+
+<!-- Rest/Utilities -->
+<script src="js/ActionTypes.js"></script>
+<script src="js/RestHandler.js"></script>
 <script src="js/id_generator.js"></script>
 <script src="js/riot+compiler.min.js"></script>
+<script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+
 <script>
+    initializeState();
+
+    const store = Redux.createStore(projectReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+    store.subscribe(()=> {
+        localStorage.setItem("state", JSON.stringify(store.getState()));
+    });
     var bus = riot.observable();
     riot.mount('*');
     riot.mixin({bus: bus});

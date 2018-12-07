@@ -1,4 +1,4 @@
-<issuelist show="{ display }">
+<issuelist show="{ allIssues().length > 0 }">
     <section id="issues">
         <fieldset>
             <legend class="rainbow3">Issues</legend>
@@ -11,38 +11,25 @@
     </section>
     <script>
         var tag = this;
-        tag.display = false;
         tag.issues = new IssueCollection();
+
+        store.subscribe(() => {
+            tag.update();
+        });
+
         tag.allIssues = function () {
-            return tag.issues.getPrioritySorted();
+            let currentState = store.getState();
+            return getPrioritySorted(mapByProject(currentState.currentProject, currentState.issues));
         }
 
-        this.bus.on('issueAdded', function (issue) {
-            tag.issues.add(issue);
-            tag.bus.trigger('updatedIssues', tag.issues);
-            tag.update();
-        });
+        function mapByProject(project_id, issues) {
+            return issues.filter(issue => issue.project_id === project_id);
+        }
 
-        this.bus.on('issueRemoved', function (client_id) {
-            tag.issues.remove(client_id);
-            tag.bus.trigger('updatedIssues', tag.issues);
-            tag.update();
-        });
-
-        this.bus.on('projectChange', function (project) {
-            tag.display = project != null;
-            if (tag.display) {
-                tag.issues = new IssueCollection(project.issueCollection);
-            }
-            tag.update();
-        })
-        ;
-
-        this.bus.on('toggleCheckbox', function (client_id, done) {
-            tag.issues.getByIdentifier(client_id).done = done;
-            tag.bus.trigger('updatedIssues', tag.issues);
-            tag.update();
-        });
-
+        function getPrioritySorted(issues) {
+            return issues.sort(function (a, b) {
+                return a.priority - b.priority;
+            });
+        }
     </script>
 </issuelist>

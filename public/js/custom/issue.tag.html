@@ -17,13 +17,13 @@
 
         checkboxChange(e)
         {
-            this.bus.trigger('toggleCheckbox', tag.issue.client_id, this.refs.checkbox.checked);
+            store.dispatch(toggleIssueAction(tag.issue.client_id));
             e.preventDefault()
         }
 
         removeIssue(e)
         {
-            this.bus.trigger('issueRemoved', tag.issue.client_id);
+            store.dispatch(deleteIssueAction(tag.issue.client_id));
             e.preventDefault()
         }
     </script>

@@ -17,7 +17,7 @@
                 var tag = this;
                 tag.projects = new ProjectCollection(this);
                 tag.allProjects = function () {
-                    return tag.projects.get();
+                    return store.getState().projects;
                 }
 
                 this.on("mount", function () {
@@ -30,14 +30,21 @@
                     tag.update();
                 });
 
+                store.subscribe(() => {
+                    tag.update();
+                });
+
                 projectChange(e)
                 {
                     let selectedProject = tag.projects.getByIdentifier(this.refs.project.value);
                     tag.projects.setSelectedProject(selectedProject);
-                    tag.bus.trigger('projectChange', selectedProject);
+                    if(selectedProject != null){
+                        store.dispatch(changeProjectAction(selectedProject.client_id));
+                    }
                     if (e) {
                         e.preventDefault();
                     }
+                    tag.update();
                 }
 
                 addProject(e)
@@ -51,7 +58,10 @@
                     tag.projects.selected = newProject;
 
                     tag.projects.setSelectedProject(newProject);
-                    tag.bus.trigger('projectChange', newProject);
+
+                    store.dispatch(addProjectAction(newProject));
+
+                    api_saveProject(newProject);
 
                     tag.projects.storeProjectCollection();
                     if (e) {

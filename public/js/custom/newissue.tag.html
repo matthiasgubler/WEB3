@@ -23,21 +23,27 @@
                 dateFormat: 'dd.mm.yy'
             });
         });
+
+        store.subscribe(() => {
+            let storedCurrentProject = store.getState().currentProject;
+            tag.display = storedCurrentProject != null;
+            if (tag.display) {
+                tag.current_project_id = storedCurrentProject;
+            }
+
+            tag.update();
+        });
+
         addIssue(e)
         {
-            this.bus.trigger('issueAdded', new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value, tag.current_project_id));
+            let issue = new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value, tag.current_project_id);
+
+            store.dispatch(addIssueAction(issue));
             this.refs.title.value = '';
             this.refs.date.value = '';
             this.refs.priority.value = 'Priority';
             e.preventDefault()
         }
 
-        this.bus.on('projectChange', function (project) {
-            tag.display = project != null;
-            if (tag.display) {
-                tag.current_project_id = project.client_id;
-            }
-            tag.update();
-        });
     </script>
 </newissue>
