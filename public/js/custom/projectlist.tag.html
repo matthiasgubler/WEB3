@@ -6,7 +6,8 @@
                 <label for="projectsList">Projects:</label>
                 <select class="form-control" id="projectsList" ref="project" onchange="{ projectChange }">
                     <option value="-1">Select Project...</option>
-                    <option each="{ project in allProjects() }" value="{ project.client_id }">{ project.title }
+                    <option each="{ project in allProjects() }" value="{ project.client_id }"
+                            selected={project.client_id==currentProject()}>{ project.title }
                     </option>
                 </select>
             </div>
@@ -18,6 +19,10 @@
                 tag.projects = new ProjectCollection(this);
                 tag.allProjects = function () {
                     return store.getState().projects;
+                }
+
+                tag.currentProject = function () {
+                    return store.getState().currentProject;
                 }
 
                 this.on("mount", function () {
@@ -38,7 +43,7 @@
                 {
                     let selectedProject = tag.projects.getByIdentifier(this.refs.project.value);
                     tag.projects.setSelectedProject(selectedProject);
-                    if(selectedProject != null){
+                    if (selectedProject != null) {
                         store.dispatch(changeProjectAction(selectedProject.client_id));
                     }
                     if (e) {
