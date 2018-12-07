@@ -7,5 +7,7 @@ class Issue {
         this.date = date;
         this.done = done;
         this.priority = isNaN(parseInt(priority)) ? 3 : parseInt(priority);
+        this.dirty = true;
+        this.deleted = false;
     }
 }

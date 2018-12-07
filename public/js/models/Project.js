@@ -6,7 +6,7 @@ class Project {
         this.updated_at = this.created_at;
         this.title = title;
         this.active = true;
-
+        this.dirty = true;
     }
 
     toJSON() {

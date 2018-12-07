@@ -18,11 +18,15 @@
 
         tag.allIssues = function () {
             let currentState = store.getState();
-            return getPrioritySorted(mapByProject(currentState.currentProject, currentState.issues));
+            return getPrioritySorted(filterByProject(currentState.currentProject, filterDeleted(currentState.issues)));
         }
 
-        function mapByProject(project_id, issues) {
+        function filterByProject(project_id, issues) {
             return issues.filter(issue => issue.project_id === project_id);
+        }
+
+        function filterDeleted(issues) {
+            return issues.filter(issue => !issue.deleted);
         }
 
         function getPrioritySorted(issues) {

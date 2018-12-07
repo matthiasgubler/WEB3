@@ -13,12 +13,10 @@ function initializeState() {
     }
 }
 
-function persistState(){
-
-}
-
 function projectReducer(state = initialState, action) {
+
     switch (action.type) {
+        //UI handled Actions
         case CHANGE_PROJECT:
             return handleChangeProject(state, action);
         case ADD_PROJECT:
@@ -28,7 +26,21 @@ function projectReducer(state = initialState, action) {
         case TOGGLE_ISSUE:
             return handleToggleIssue(state, action);
         case DELETE_ISSUE:
-            return handleDeleteProject(state, action);
+            return handleDeleteIssue(state, action);
+
+        //API handled "cleaning" Actions
+        case SYNC_ADD_PROJECT:
+            return handleSyncAddProject(state, action);
+        case SYNC_RETRIEVE_PROJECT:
+            return handleSyncRetrieveProject(state, action);
+        case SYNC_RETRIEVE_ISSUES:
+            return handleSyncRetrieveIssues(state, action);
+        case SYNC_ADD_ISSUE:
+            return handleSyncAddIssue(state, action);
+        case SYNC_CHANGE_ISSUE:
+            return handleSyncChangeIssue(state, action);
+        case SYNC_DELETE_ISSUE:
+            return handleDeletePhysicalIssue(state, action);
         default:
             return state
     }
@@ -77,7 +89,41 @@ function handleToggleIssue(state, action) {
     })
 }
 
-function handleDeleteProject(state, action) {
+function handleDeleteIssue(state, action) {
+    return Object.assign({}, state, {
+        issues: state.issues.map(issue => {
+            if (issue.client_id !== action.issue_client_id) {
+                return issue
+            }
+            return Object.assign({}, issue, {
+                    deleted: true
+                }
+            )
+        })
+    })
+}
+
+function handleSyncAddProject(state, action) {
+    return state;
+}
+
+function handleSyncRetrieveProject(state, action) {
+    return state;
+}
+
+function handleSyncRetrieveIssues(state, action) {
+    return state;
+}
+
+function handleSyncAddIssue(state, action) {
+    return state;
+}
+
+function handleSyncChangeIssue(state, action) {
+    return state;
+}
+
+function handleDeletePhysicalIssue(state, action) {
     let affectedIssue = state.issues.filter(issue => issue.client_id === action.issue_client_id);
     return Object.assign({}, state, {
         issues: [...state.issues.filter(issue => issue.client_id !== action.issue_client_id)],

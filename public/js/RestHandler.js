@@ -4,6 +4,13 @@ const projectIdAPI = projectsAPI + "/{id}";
 const issueAPI = projectsAPI + "issue";
 const issueIdAPI = issueAPI + "/{id}";
 
+store.subscribe(syncWithAPI)
+
+function syncWithAPI(){
+    let currentState = store.getState();
+}
+
+
 function api_saveProject(project) {
     let projectJSON = JSON.stringify(project);
     console.log(project);
