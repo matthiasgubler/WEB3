@@ -82,7 +82,8 @@ function handleToggleIssue(state, action) {
                 return issue
             }
             return Object.assign({}, issue, {
-                    done: !issue.done
+                    done: !issue.done,
+                    dirty: true
                 }
             )
         })
@@ -104,23 +105,71 @@ function handleDeleteIssue(state, action) {
 }
 
 function handleSyncAddProject(state, action) {
-    return state;
+    return Object.assign({}, state, {
+        projects: state.projects.map(project => {
+            if (project.client_id !== action.project.client_id) {
+                return project
+            }
+            return Object.assign({}, project, {
+                    id: action.project.id,
+                    created_at: !action.project.created_at,
+                    updated_at: !action.project.updated_at,
+                    dirty: false
+                }
+            )
+        })
+    })
 }
 
 function handleSyncRetrieveProject(state, action) {
+    console.log("NOT YET IMPLEMENTED");
     return state;
 }
 
 function handleSyncRetrieveIssues(state, action) {
+    console.log("NOT YET IMPLEMENTED");
     return state;
 }
 
 function handleSyncAddIssue(state, action) {
-    return state;
+    return Object.assign({}, state, {
+        issues: state.issues.map(issue => {
+            if (issue.client_id !== action.issue.client_id) {
+                return issue
+            }
+            return Object.assign({}, issue, {
+                    id: action.issue.id,
+                    created_at: !action.project.created_at,
+                    updated_at: !action.project.updated_at,
+                    dirty: false
+                }
+            )
+        })
+    });
 }
 
 function handleSyncChangeIssue(state, action) {
-    return state;
+    return Object.assign({}, state, {
+        issues: state.issues.map(issue => {
+            if (issue.client_id !== action.issue.client_id) {
+                return issue
+            }
+            return Object.assign({}, issue, {
+                    dirty: false,
+                    done: action.issue.done,
+                    due_date: action.issue.due_date,
+                    title: action.issue.title,
+                    updated_at: action.issue.updated_at,
+                    project_client_id: action.issue.project_client_id,
+                    priority: action.issue.priority,
+                    id: action.issue.id,
+                    client_id: action.issue.client_id,
+                    project_id: action.issue.project_id,
+                    created_at: action.issue.created_at
+                }
+            )
+        })
+    });
 }
 
 function handleDeletePhysicalIssue(state, action) {

@@ -1,15 +1,39 @@
 const apiURL = "http://zhaw-issue-tracker-api.herokuapp.com/api/";
 const projectsAPI = apiURL + "projects";
-const projectIdAPI = projectsAPI + "/{id}";
+const param_project_id = "{project_id}"
+const projectIdAPI = projectsAPI + "/" + param_project_id;
 const issueAPI = projectsAPI + "issue";
-const issueIdAPI = issueAPI + "/{id}";
+const param_issue_id = "{issue_id}"
+const issueIdAPI = issueAPI + "/" + param_issue_id;
 
-store.subscribe(syncWithAPI)
-
-function syncWithAPI(){
+function syncWithAPI() {
     let currentState = store.getState();
+
+    syncNewProjects(currentState.projects);
+    syncNewIssues(currentState.issues);
+    syncDirtyIssues(currentState.issues);
+    syncDeletedIssues(currentState.issues);
 }
 
+function syncNewProjects(projects) {
+    let noIdProjects = projects.filter(project => project.id == 0);
+    noIdProjects.forEach(noIdProject => api_saveProject(noIdProject));
+}
+
+function syncNewIssues(issues) {
+    let newIssues = issues.filter(issue => issue.dirty);
+    newIssues.forEach(newIssue => api_saveIssue(newIssue));
+}
+
+function syncDirtyIssues(issues) {
+    let dirtyIssues = issues.filter(issue => issue.dirty);
+    dirtyIssues.forEach(dirtyIssue => api_updateIssue(dirtyIssue));
+}
+
+function syncDeletedIssues(issues) {
+    let deletedIssues = issues.filter(issue => issue.deleted);
+    deletedIssues.forEach(deletedIssue => api_deleteIssue(deletedIssue));
+}
 
 function api_saveProject(project) {
     let projectJSON = JSON.stringify(project);
@@ -22,9 +46,7 @@ function api_saveProject(project) {
         contentType: "application/json",
         data: projectJSON,
         success: function (data) {
-            //Und jetzt??
-            project.id = date.id;
-
+            store.dispatch(syncAddProjectAction(data));
         },
         error: function (data) {
             console.log("error");
@@ -41,7 +63,7 @@ function api_updateProject(project) {
 
     $.ajax({
         type: "PUT",
-        url: projectIdAPI,
+        url: projectIdAPI.replace(param_project_id, project.id),
         contentType: "application/json",
         data: projectJSON,
         success: function (data) {
@@ -63,7 +85,7 @@ function api_retrieveProject(project) {
 
     $.ajax({
         type: "GET",
-        url: projectIdAPI,
+        url: projectIdAPI.replace(param_project_id, project.id),
         contentType: "application/json",
         data: projectJSON,
         success: function (data) {
@@ -85,12 +107,11 @@ function api_saveIssue(issue) {
 
     $.ajax({
         type: "POST",
-        url: issueAPI,
+        url: issueAPI.replace(param_project_id, issue.project_id),
         contentType: "application/json",
         data: issueJSON,
         success: function (data) {
-            issue.id = data.id;
-
+            store.dispatch(syncAddIssueAction(data));
         },
         error: function (data) {
             console.log("error");
@@ -102,16 +123,14 @@ function api_saveIssue(issue) {
 
 function api_updateIssue(issue) {
     let issueJSON = JSON.stringify(issue);
-    console.log(issue);
-    console.log(issueJSON);
 
     $.ajax({
         type: "PUT",
-        url: issueIdAPI,
+        url: issueIdAPI.replace(param_project_id, issue.project_id).replace(param_issue_id, issue.id),
         contentType: "application/json",
         data: issueJSON,
         success: function (data) {
-
+            store.dispatch(syncChangeIssueAction(data));
         },
         error: function (data) {
             console.log("error");
@@ -128,7 +147,7 @@ function api_retrieveIssue(issue) {
 
     $.ajax({
         type: "GET",
-        url: issueAPI,
+        url: issueAPI.replace(param_project_id, issue.project_id),
         contentType: "application/json",
         data: issueJSON,
         success: function (data) {
@@ -149,11 +168,11 @@ function api_deleteIssue(issue) {
 
     $.ajax({
         type: "DELETE",
-        url: issueIdAPI,
+        url: issueIdAPI.replace(param_project_id, issue.project_id).replace(param_issue_id, issue.id),
         contentType: "application/json",
         data: issueJSON,
         success: function (data) {
-
+            store.dispatch(syncDeleteIssueAction(issue.client_id));
         },
         error: function (data) {
             console.log("error");

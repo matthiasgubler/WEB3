@@ -73,6 +73,7 @@
     store.subscribe(()=> {
         localStorage.setItem("state", JSON.stringify(store.getState()));
     });
+    store.subscribe(syncWithAPI);
     var bus = riot.observable();
     riot.mount('*');
     riot.mixin({bus: bus});
