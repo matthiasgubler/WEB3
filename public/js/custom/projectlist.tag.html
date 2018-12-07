@@ -16,7 +16,7 @@
             <button onclick="{ addProject }">Create Project</button>
             <script>
                 var tag = this;
-                tag.projects = new ProjectCollection(this);
+
                 tag.allProjects = function () {
                     return store.getState().projects;
                 }
@@ -25,59 +25,51 @@
                     return store.getState().currentProject;
                 }
 
-                this.on("mount", function () {
-                    tag.projects.loadProjectCollection();
-                    let selectedProject = tag.projects.loadSelectedProject();
-                    if (selectedProject != null) {
-                        tag.refs.project.value = selectedProject.client_id;
-                    }
-                    this.projectChange();
-                    tag.update();
-                });
-
                 store.subscribe(() => {
                     tag.update();
                 });
 
                 projectChange(e)
                 {
-                    let selectedProject = tag.projects.getByIdentifier(this.refs.project.value);
-                    tag.projects.setSelectedProject(selectedProject);
-                    if (selectedProject != null) {
-                        store.dispatch(changeProjectAction(selectedProject.client_id));
+                    let selectedProjectId = this.refs.project.value;
+                    if (selectedProjectId != null && selectedProjectId != -1) {
+                        store.dispatch(changeProjectAction(selectedProjectId));
                     }
                     if (e) {
                         e.preventDefault();
                     }
-                    tag.update();
+                }
+
+                function getByIdentifier(projects, client_id) {
+                    let index = indexOfIdentifier(client_id);
+                    if (index < 0) {
+                        return null;
+                    }
+                    return projects[index];
+                }
+
+                function indexOfIdentifier(projects, client_id) {
+                    for (var i = 0; i < projects.length; i++) {
+                        if (projects[i].client_id == client_id) {
+                            return i;
+                        }
+                    }
+                    return -1;
                 }
 
                 addProject(e)
                 {
                     let newProject = new Project(this.refs.newproject.value);
-                    tag.projects.add(newProject);
-                    tag.update();
-
-                    tag.refs.project.value = newProject.client_id;
                     tag.refs.newproject.value = "";
-                    tag.projects.selected = newProject;
-
-                    tag.projects.setSelectedProject(newProject);
 
                     store.dispatch(addProjectAction(newProject));
 
                     api_saveProject(newProject);
 
-                    tag.projects.storeProjectCollection();
                     if (e) {
                         e.preventDefault()
                     }
                 }
-
-                this.bus.on('updatedIssues', function (issues) {
-                    tag.projects.selected.issueCollection = issues;
-                    tag.projects.storeProjectCollection();
-                });
 
             </script>
         </fieldset>

@@ -8,12 +8,4 @@ class Issue {
         this.done = done;
         this.priority = isNaN(parseInt(priority)) ? 3 : parseInt(priority);
     }
-
-    check() {
-        this.done = true;
-    }
-
-    uncheck() {
-        this.done = false;
-    }
 }

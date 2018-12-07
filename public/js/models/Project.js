@@ -5,7 +5,6 @@ class Project {
         this.created_at = new Date();
         this.updated_at = this.created_at;
         this.title = title;
-        this.issueCollection = new IssueCollection();
         this.active = true;
 
     }
