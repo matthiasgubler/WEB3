@@ -40,23 +40,6 @@
                     }
                 }
 
-                function getByIdentifier(projects, client_id) {
-                    let index = indexOfIdentifier(client_id);
-                    if (index < 0) {
-                        return null;
-                    }
-                    return projects[index];
-                }
-
-                function indexOfIdentifier(projects, client_id) {
-                    for (var i = 0; i < projects.length; i++) {
-                        if (projects[i].client_id == client_id) {
-                            return i;
-                        }
-                    }
-                    return -1;
-                }
-
                 addProject(e)
                 {
                     let newProject = new Project(this.refs.newproject.value);
