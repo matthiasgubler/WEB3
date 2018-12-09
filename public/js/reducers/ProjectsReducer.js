@@ -139,7 +139,7 @@ function handleSyncOutdatedProject(state, action) {
 
     return Object.assign({}, state, {
         projects: [...state.projects.filter(project => project.id !== action.project_id)],
-        currentProject: state.currentProject === outdatedProject.client_id ? null : currentProject
+        currentProject: state.currentProject === outdatedProject.client_id ? null : state.currentProject
     });
 }
 
