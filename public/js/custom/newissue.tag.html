@@ -1,4 +1,4 @@
-<newissue show="{ display }">
+<newissue show="{ currentProject() !== null }">
     <section id="newissue">
         <select ref="priority">
             <option selected="true" disabled="true">Priority</option>
@@ -8,15 +8,13 @@
         </select>
 
         <label for="issuedate">Datum: </label>
-        <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]" ref="date"/>
+        <input type="text" id="issuedate" placeholder="[DD.MM.YYYY]" ref="due_date"/>
         <input id="inputnewissue" type="text" class="form-control" name="inputnewissue" placeholder="new issue..."
                ref="title">
         <button id="newIssueButton" onclick="{ addIssue }">Create Issue</button>
     </section>
     <script>
         var tag = this;
-        tag.display = false;
-        tag.current_project_id = null;
 
         this.on('mount', function () {
             $("#issuedate").datepicker({
@@ -24,23 +22,23 @@
             });
         });
 
-        store.subscribe(() => {
-            let storedCurrentProject = store.getState().currentProject;
-            tag.display = storedCurrentProject != null;
-            if (tag.display) {
-                tag.current_project_id = storedCurrentProject;
-            }
+        tag.currentProject = function () {
+            return store.getState().currentProject;
+        }
 
+        store.subscribe(() => {
             tag.update();
         });
 
         addIssue(e)
         {
-            let issue = new Issue(this.refs.title.value, this.refs.date.value, false, this.refs.priority.value, tag.current_project_id);
+            let currentProject = store.getState().projects.filter(project => project.client_id == store.getState().currentProject)[0];
+
+            let issue = new Issue(this.refs.title.value, this.refs.due_date.value, false, this.refs.priority.value, tag.currentProject(), currentProject != null ? currentProject.id : 0);
 
             store.dispatch(addIssueAction(issue));
             this.refs.title.value = '';
-            this.refs.date.value = '';
+            this.refs.due_date.value = '';
             this.refs.priority.value = 'Priority';
             e.preventDefault()
         }

@@ -1,3 +1,4 @@
+const RESET = 'RESET';
 const CHANGE_PROJECT = 'CHANGE_PROJECT';
 const ADD_PROJECT = 'ADD_PROJECT';
 const ADD_ISSUE = 'ADD_ISSUE';
@@ -9,6 +10,10 @@ const SYNC_RETRIEVE_ISSUES = 'SYNC_RETRIEVE_ISSUES';
 const SYNC_ADD_ISSUE = 'SYNC_ADD_ISSUE';
 const SYNC_CHANGE_ISSUE = 'SYNC_CHANGE_ISSUE';
 const SYNC_DELETE_ISSUE = 'SYNC_DELETE_ISSUE';
+
+function resetAction() {
+    return {type: RESET}
+}
 
 function changeProjectAction(project_client_id) {
     return {type: CHANGE_PROJECT, project_client_id}

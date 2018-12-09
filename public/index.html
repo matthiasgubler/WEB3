@@ -28,16 +28,13 @@
     <section id="content">
         <header>
             <h1 class="rainbow1">Tissue Tracker
-                <button onclick="localStorage.clear();">Clear Storage</button>
+                <button onclick="resetStuff()">Clear Storage</button>
             </h1>
         </header>
         <projectlist></projectlist>
         <newissue></newissue>
         <issuelist></issuelist>
     </section>
-    <!-- footer>
-        <a href="tests/SpecRunner.html">Jasmin Tests (Spec Runner)</a>
-    </footer -->
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
@@ -70,13 +67,18 @@
     initializeState();
 
     const store = Redux.createStore(projectReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-    store.subscribe(()=> {
+    store.subscribe(() => {
         localStorage.setItem("state", JSON.stringify(store.getState()));
     });
     store.subscribe(syncWithAPI);
     var bus = riot.observable();
     riot.mount('*');
     riot.mixin({bus: bus});
+
+    function resetStuff() {
+        localStorage.clear();
+        store.dispatch(resetAction());
+    }
 </script>
 
 </body>

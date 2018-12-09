@@ -1,13 +1,15 @@
+const initializationState = {
+    currentProject: null,
+    issues: [],
+    projects: []
+};
+
 let initialState;
 
 function initializeState() {
     let lsInitialState = localStorage.getItem("state");
     if (lsInitialState == null) {
-        initialState = {
-            currentProject: null,
-            issues: [],
-            projects: []
-        }
+        initialState = initializationState;
     } else {
         initialState = JSON.parse(lsInitialState);
     }
@@ -17,6 +19,8 @@ function projectReducer(state = initialState, action) {
 
     switch (action.type) {
         //UI handled Actions
+        case RESET:
+            return handleReset(state, action);
         case CHANGE_PROJECT:
             return handleChangeProject(state, action);
         case ADD_PROJECT:
@@ -44,6 +48,10 @@ function projectReducer(state = initialState, action) {
         default:
             return state
     }
+}
+
+function handleReset(state, action) {
+    return initializationState;
 }
 
 function handleChangeProject(state, action) {
@@ -112,8 +120,8 @@ function handleSyncAddProject(state, action) {
             }
             return Object.assign({}, project, {
                     id: action.project.id,
-                    created_at: !action.project.created_at,
-                    updated_at: !action.project.updated_at,
+                    created_at: action.project.created_at,
+                    updated_at: action.project.updated_at,
                     dirty: false
                 }
             )
@@ -139,8 +147,9 @@ function handleSyncAddIssue(state, action) {
             }
             return Object.assign({}, issue, {
                     id: action.issue.id,
-                    created_at: !action.project.created_at,
-                    updated_at: !action.project.updated_at,
+                    created_at: action.issue.created_at,
+                    updated_at: action.issue.updated_at,
+                    due_date: action.issue.due_date,
                     dirty: false
                 }
             )

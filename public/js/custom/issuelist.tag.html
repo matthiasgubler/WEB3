@@ -21,8 +21,8 @@
             return getPrioritySorted(filterByProject(currentState.currentProject, filterDeleted(currentState.issues)));
         }
 
-        function filterByProject(project_id, issues) {
-            return issues.filter(issue => issue.project_id === project_id);
+        function filterByProject(project_client_id, issues) {
+            return issues.filter(issue => issue.project_client_id === project_client_id);
         }
 
         function filterDeleted(issues) {
