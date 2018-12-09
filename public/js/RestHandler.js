@@ -1,4 +1,4 @@
-const apiURL = "http://zhaw-issue-tracker-api.herokuapp.com/api/";
+const apiURL = "https://zhaw-issue-tracker-api.herokuapp.com/api/";
 const projectsAPI = apiURL + "projects";
 const param_project_id = "{project_id}"
 const projectIdAPI = projectsAPI + "/" + param_project_id;
