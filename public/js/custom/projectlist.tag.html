@@ -18,7 +18,11 @@
                 var tag = this;
 
                 tag.allProjects = function () {
-                    return store.getState().projects;
+                    return filterInactive(store.getState().projects);
+                }
+
+                function filterInactive(projects) {
+                    return projects.filter(project => project.active);
                 }
 
                 tag.currentProject = function () {

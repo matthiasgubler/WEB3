@@ -5,6 +5,7 @@ const ADD_ISSUE = 'ADD_ISSUE';
 const TOGGLE_ISSUE = 'TOGGLE_ISSUE';
 const DELETE_ISSUE = 'DELETE_ISSUE';
 const SYNC_ADD_PROJECT = 'SYNC_ADD_PROJECT';
+const SYNC_OUTDATED_PROJECT = 'SYNC_OUTDATED_PROJECT';
 const SYNC_RETRIEVE_PROJECT = 'SYNC_RETRIEVE_PROJECT';
 const SYNC_RETRIEVE_ISSUES = 'SYNC_RETRIEVE_ISSUES';
 const SYNC_ADD_ISSUE = 'SYNC_ADD_ISSUE';
@@ -23,6 +24,10 @@ function addProjectAction(project) {
     return {type: ADD_PROJECT, project}
 }
 
+function outdateProjectAction(project_id) {
+    return {type: SYNC_OUTDATED_PROJECT, project_id}
+}
+
 function addIssueAction(issue) {
     return {type: ADD_ISSUE, issue}
 }
@@ -39,12 +44,12 @@ function syncAddProjectAction(project) {
     return {type: SYNC_ADD_PROJECT, project}
 }
 
-function syncRetrieveProjectAction(project) {
-    return {type: SYNC_RETRIEVE_PROJECT, project}
+function syncRetrieveProjectAction(project_id, project) {
+    return {type: SYNC_RETRIEVE_PROJECT, project_id, project}
 }
 
-function syncRetrieveIssuesAction(issues) {
-    return {type: SYNC_RETRIEVE_ISSUES, issues}
+function syncRetrieveIssuesAction(project_id, issues) {
+    return {type: SYNC_RETRIEVE_ISSUES, project_id, issues}
 }
 
 function syncAddIssueAction(issue) {

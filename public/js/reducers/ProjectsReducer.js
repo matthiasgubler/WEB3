@@ -6,17 +6,18 @@ const initializationState = {
 
 let initialState;
 
-function initializeState() {
+function initializeState(reloadActionCallBack) {
     let lsInitialState = localStorage.getItem("state");
     if (lsInitialState == null) {
         initialState = initializationState;
     } else {
         initialState = JSON.parse(lsInitialState);
     }
+
+    reloadActionCallBack(initialState);
 }
 
 function projectReducer(state = initialState, action) {
-
     switch (action.type) {
         //UI handled Actions
         case RESET:
@@ -35,6 +36,8 @@ function projectReducer(state = initialState, action) {
         //API handled "cleaning" Actions
         case SYNC_ADD_PROJECT:
             return handleSyncAddProject(state, action);
+        case SYNC_OUTDATED_PROJECT:
+            return handleSyncOutdatedProject(state, action);
         case SYNC_RETRIEVE_PROJECT:
             return handleSyncRetrieveProject(state, action);
         case SYNC_RETRIEVE_ISSUES:
@@ -118,10 +121,39 @@ function handleSyncAddProject(state, action) {
             if (project.client_id !== action.project.client_id) {
                 return project
             }
+            if (project.id !== action.project.id) {
+                return Object.assign({}, project, {
+                        id: action.project.id,
+                        created_at: action.project.created_at,
+                        updated_at: action.project.updated_at,
+                        dirty: false
+                    }
+                )
+            }
+        })
+    })
+}
+
+function handleSyncOutdatedProject(state, action) {
+    let outdatedProject = state.projects.filter(project => project.id == action.project_id)[0];
+
+    return Object.assign({}, state, {
+        projects: [...state.projects.filter(project => project.id !== action.project_id)],
+        currentProject: state.currentProject === outdatedProject.client_id ? null : currentProject
+    });
+}
+
+function handleSyncRetrieveProject(state, action) {
+    return Object.assign({}, state, {
+        projects: state.projects.map(project => {
+            if (project.client_id !== action.project.client_id) {
+                return project
+            }
             return Object.assign({}, project, {
-                    id: action.project.id,
                     created_at: action.project.created_at,
                     updated_at: action.project.updated_at,
+                    title: action.project.title,
+                    active: action.project.active,
                     dirty: false
                 }
             )
@@ -129,14 +161,10 @@ function handleSyncAddProject(state, action) {
     })
 }
 
-function handleSyncRetrieveProject(state, action) {
-    console.log("NOT YET IMPLEMENTED");
-    return state;
-}
-
 function handleSyncRetrieveIssues(state, action) {
-    console.log("NOT YET IMPLEMENTED");
-    return state;
+    return Object.assign({}, state, {
+        issues: [...state.issues.filter(issue => issue.project_id !== action.project_id)].concat(action.issues)
+    });
 }
 
 function handleSyncAddIssue(state, action) {
@@ -182,18 +210,8 @@ function handleSyncChangeIssue(state, action) {
 }
 
 function handleDeletePhysicalIssue(state, action) {
-    let affectedIssue = state.issues.filter(issue => issue.client_id === action.issue_client_id);
     return Object.assign({}, state, {
-        issues: [...state.issues.filter(issue => issue.client_id !== action.issue_client_id)],
-        projects: state.projects.map(project => {
-            if (project.client_id !== affectedIssue.project_id) {
-                return project
-            }
-            return Object.assign({}, project, {
-                    issues: [...state.issues.filter(issue => issue.client_id !== action.issue_client_id)]
-                }
-            )
-        })
+        issues: [...state.issues.filter(issue => issue.client_id !== action.issue_client_id)]
     });
 }
 

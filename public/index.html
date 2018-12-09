@@ -64,16 +64,15 @@
 <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
 
 <script>
-    initializeState();
+    initializeState(reloadData);
 
     const store = Redux.createStore(projectReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
     store.subscribe(() => {
         localStorage.setItem("state", JSON.stringify(store.getState()));
     });
     store.subscribe(syncWithAPI);
-    var bus = riot.observable();
+
     riot.mount('*');
-    riot.mixin({bus: bus});
 
     function resetStuff() {
         localStorage.clear();

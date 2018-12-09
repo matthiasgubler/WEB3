@@ -1,10 +1,25 @@
 const apiURL = "https://zhaw-issue-tracker-api.herokuapp.com/api/";
 const projectsAPI = apiURL + "projects";
-const param_project_id = "{project_id}"
+const param_project_id = "{project_id}";
 const projectIdAPI = projectsAPI + "/" + param_project_id;
 const issueAPI = projectIdAPI + "/issues";
-const param_issue_id = "{issue_id}"
+const param_issue_id = "{issue_id}";
 const issueIdAPI = issueAPI + "/" + param_issue_id;
+
+function reloadData(initialState) {
+    syncProjects(initialState.projects);
+    syncIssuesPerProject(initialState.projects);
+}
+
+function syncProjects(projects) {
+    let projectsToSync = projects.filter(project => project.id !== 0);
+    projectsToSync.forEach(projectToSync => api_retrieveProject(projectToSync));
+}
+
+function syncIssuesPerProject(projects) {
+    let projectsToSync = projects.filter(project => project.id !== 0);
+    projectsToSync.forEach(projectToSync => api_retrieveIssue(projectToSync));
+}
 
 function syncWithAPI() {
     let currentState = store.getState();
@@ -55,22 +70,19 @@ function api_saveProject(project) {
 }
 
 function api_retrieveProject(project) {
-    let projectJSON = JSON.stringify(project);
-    console.log(project);
-    console.log(projectJSON);
-
     $.ajax({
         type: "GET",
         url: projectIdAPI.replace(param_project_id, project.id),
         contentType: "application/json",
-        data: projectJSON,
         success: function (data) {
-            //Und jetzt??
-
+            store.dispatch(syncRetrieveProjectAction(project.id, data));
         },
         error: function (data) {
             console.log("error");
             console.log(data);
+            if (data.status == 200) {
+                store.dispatch(outdateProjectAction(project.id));
+            }
         },
         dataType: 'json'
     });
@@ -114,18 +126,13 @@ function api_updateIssue(issue) {
     });
 }
 
-function api_retrieveIssue(issue) {
-    let issueJSON = JSON.stringify(issue);
-    console.log(issue);
-    console.log(issueJSON);
-
+function api_retrieveIssue(project) {
     $.ajax({
         type: "GET",
-        url: issueAPI.replace(param_project_id, issue.project_id),
+        url: issueAPI.replace(param_project_id, project.id),
         contentType: "application/json",
-        data: issueJSON,
         success: function (data) {
-
+            store.dispatch(syncRetrieveIssuesAction(project.id, data));
         },
         error: function (data) {
             console.log("error");
